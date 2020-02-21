@@ -54,8 +54,8 @@ public class AnalyticsCounter {
 	 */
 	private static void buildSymptomsFile() throws IOException {
 		FileWriter writer = new FileWriter ("result.out");
-		writer.write("number of symptoms: " + AnalyticsCounter.map.size() + "\n");
-		writer.write("**************************\n");
+		//writer.write("number of symptoms: " + AnalyticsCounter.map.size() + "\n");
+		//writer.write("**************************\n");
 		AnalyticsCounter.map.forEach((k, v) ->
 				{
 					try {
