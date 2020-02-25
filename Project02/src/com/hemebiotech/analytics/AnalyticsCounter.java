@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class AnalyticsCounter {
 	private static Map<String, Integer> map = new HashMap<>();
@@ -24,6 +27,8 @@ public class AnalyticsCounter {
 			buildSymptomsMap(line);
 			line = reader.readLine();// get another symptom
 		}
+		//sort Map
+		sortSymptomsMap();
 		// next generate output
 		buildSymptomsFile();
 	}
@@ -46,6 +51,20 @@ public class AnalyticsCounter {
 		//occurenceNumber = map.putIfAbsent(symptom, 1);
 		//map.put(symptom, map.get(symptom) + 1);
 		//map.put(symptom, map.containsKey(symptom) ? map.get(symptom) + 1 : 1);
+	}
+
+	/**
+	 * Sort Symptoms Map
+	 */
+	private static void sortSymptomsMap(){
+		/*Stream<Map.Entry<String,Integer>> sorted =
+				map.entrySet().stream()
+						.sorted(Map.Entry.comparingByValue());*/
+		Map<String, Integer> sortedMap = map.entrySet().stream()
+				.sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+						(e1, e2) -> e1, LinkedHashMap::new));
+		map = sortedMap;
 	}
 
 	/**
