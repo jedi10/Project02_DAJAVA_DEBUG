@@ -6,14 +6,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AnalyticsCounter {
 	private static Map<String, Integer> map = new HashMap<>();
+	private static Map <String, Integer> sortedMap = new TreeMap<>();
 
 	public static void main(String args[]) throws Exception {
 		// first get input
@@ -54,17 +55,20 @@ public class AnalyticsCounter {
 	}
 
 	/**
-	 * Sort Symptoms Map
+	 * Sort Symptoms Map and create a TreeMap
 	 */
 	private static void sortSymptomsMap(){
 		/*Stream<Map.Entry<String,Integer>> sorted =
 				map.entrySet().stream()
 						.sorted(Map.Entry.comparingByValue());*/
-		Map<String, Integer> sortedMap = map.entrySet().stream()
+		AnalyticsCounter.sortedMap = map.entrySet().stream()
 				.sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-						(e1, e2) -> e1, LinkedHashMap::new));
-		map = sortedMap;
+						(e1, e2) -> e1, TreeMap::new));
+		//https://www.concretepage.com/java/jdk-8/java-8-convert-list-to-map-using-collectors-tomap-example
+		//toMap(Function keyMapper, Function valueMapper, BinaryOperator mergeFunction, Supplier mapSupplier)
+		//TreeMap Methods: descendingMap, headMap, tailMap, subMap
+		AnalyticsCounter.map.clear();
 	}
 
 	/**
@@ -75,7 +79,7 @@ public class AnalyticsCounter {
 		FileWriter writer = new FileWriter ("result.out");
 		//writer.write("number of symptoms: " + AnalyticsCounter.map.size() + "\n");
 		//writer.write("**************************\n");
-		AnalyticsCounter.map.forEach((k, v) ->
+		AnalyticsCounter.sortedMap.forEach((k, v) ->
 				{
 					try {
 						writer.write(k +": "+ v + "\n");
