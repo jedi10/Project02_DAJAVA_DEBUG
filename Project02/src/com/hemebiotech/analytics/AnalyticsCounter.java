@@ -2,10 +2,7 @@ package com.hemebiotech.analytics;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -17,26 +14,10 @@ public class AnalyticsCounter {
 	public static void main(String args[]) {
 		//Read Input File
 		String fileName = "symptoms.txt";
-		try (FileReader fileReader = new FileReader(fileName, StandardCharsets.UTF_8);
-			 BufferedReader reader = new BufferedReader (fileReader);) {
-			/*Alternatives to FileReader
-			new BufferedReader (new InputStreamReader(new FileInputStream("symptoms.txt"), StandardCharsets.UTF_8));
-			Files.newBufferedReader(Paths.get("symptoms.txt"), StandardCharsets.UTF_8);*/
-			String line = reader.readLine();
-			int i = 0;
-			while (line != null) {
-				i++;
-				System.out.println(i +": symptom from file: " + line);
-				buildSymptomsMap(line);
-				line = reader.readLine();// get another symptom
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			//System.out.println(e); //more synthetic message
-		} catch (java.io.IOException e){
-			e.printStackTrace();
-			//System.out.println(e); //more synthetic message
-		}
+		ISymptomReader fileReader = new ReadSymptomDataFromFile(fileName);
+		List<String> list = fileReader.GetSymptoms();
+		// build Map
+		buildSymptomsMap(list);
 		// Sort Map
 		sortSymptomsMap();
 		// Generate Output
@@ -44,23 +25,25 @@ public class AnalyticsCounter {
 	}
 
 	/**
-	 * Build Map of symptom with number of occurrence
-	 * No doublon
-	 * @param symptom
+	 * Build a Map of symptom with number of occurrence and No doublon
+	 * Need a List with all Symptoms (raw list with doublons)
+	 * @param symptoms List < String >
 	 */
-	private static void buildSymptomsMap(String symptom){
-		Integer mapValue = null;
-		Function<String, Integer> valueInit = v -> 1;
-		BiFunction<String, Integer , Integer> valueCompute = (k, v) -> v + 1 ;
+	private static void buildSymptomsMap(List<String> symptoms){
+		symptoms.forEach(symptom -> {
+			Integer mapValue = null;
+			Function<String, Integer> valueInit = v -> 1;
+			BiFunction<String, Integer , Integer> valueCompute = (k, v) -> v + 1 ;
 
-		mapValue = AnalyticsCounter.map.computeIfPresent(symptom, valueCompute);
-		if (mapValue == null ){
-			mapValue = AnalyticsCounter.map.computeIfAbsent(symptom, valueInit);
-		}
-		//Integer occurenceNumber = null;
-		//occurenceNumber = map.putIfAbsent(symptom, 1);
-		//map.put(symptom, map.get(symptom) + 1);
-		//map.put(symptom, map.containsKey(symptom) ? map.get(symptom) + 1 : 1);
+			mapValue = AnalyticsCounter.map.computeIfPresent(symptom, valueCompute);
+			if (mapValue == null ){
+				mapValue = AnalyticsCounter.map.computeIfAbsent(symptom, valueInit);
+			}
+			//Integer occurenceNumber = null;
+			//occurenceNumber = map.putIfAbsent(symptom, 1);
+			//map.put(symptom, map.get(symptom) + 1);
+			//map.put(symptom, map.containsKey(symptom) ? map.get(symptom) + 1 : 1);
+		});
 	}
 
 	/**
