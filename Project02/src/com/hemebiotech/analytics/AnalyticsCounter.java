@@ -1,9 +1,7 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,21 +14,39 @@ public class AnalyticsCounter {
 	private static Map<String, Integer> map = new HashMap<>();
 	private static Map <String, Integer> sortedMap = new TreeMap<>();
 
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
-
-		int i = 0;	// set i to 0
-		while (line != null) {
-			i++;	// increment i
-			System.out.println(i +": symptom from file: " + line);
-			buildSymptomsMap(line);
-			line = reader.readLine();// get another symptom
+	public static void main(String args[]) {
+		//Read Input File
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader("symptoms.txt", StandardCharsets.UTF_8));
+			String line = reader.readLine();
+			int i = 0;
+			while (line != null) {
+				i++;
+				System.out.println(i +": symptom from file: " + line);
+				buildSymptomsMap(line);
+				line = reader.readLine();// get another symptom
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			//System.out.println(e); //more synthetic message
+		} catch (java.io.IOException e){
+			e.printStackTrace();
+			//System.out.println(e); //more synthetic message
+		} finally {
+			if (reader != null){
+				try {
+					reader.close();
+				}
+				catch (IOException e)	{
+					e.printStackTrace();
+					//System.out.println(e); //more synthetic message
+				}
+			}
 		}
-		//sort Map
+		// Sort Map
 		sortSymptomsMap();
-		// next generate output
+		// Generate Output
 		buildSymptomsFile();
 	}
 
@@ -73,21 +89,34 @@ public class AnalyticsCounter {
 
 	/**
 	 * Build symptoms file result.out
-	 * @throws IOException
 	 */
-	private static void buildSymptomsFile() throws IOException {
-		FileWriter writer = new FileWriter ("result.out");
-		//writer.write("number of symptoms: " + AnalyticsCounter.map.size() + "\n");
-		//writer.write("**************************\n");
-		AnalyticsCounter.sortedMap.forEach((k, v) ->
-				{
-					try {
-						writer.write(k +": "+ v + "\n");
-					} catch (IOException e) {
-						e.printStackTrace();
+	private static void buildSymptomsFile() {
+		var lambdaContext = new Object() {
+			FileWriter writer = null;
+		};
+		try {
+			lambdaContext.writer = new FileWriter("result.out");
+			//writer.write("number of symptoms: " + AnalyticsCounter.map.size() + "\n");
+			//writer.write("**************************\n");
+			AnalyticsCounter.sortedMap.forEach((k, v) ->
+					{
+						try {
+							lambdaContext.writer.write(k +": "+ v + "\n");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
+			);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (lambdaContext.writer != null){
+				try {
+					lambdaContext.writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-		);
-		writer.close();
+			}
+		}
 	}
 }
