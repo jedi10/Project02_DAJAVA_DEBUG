@@ -16,9 +16,12 @@ public class AnalyticsCounter {
 
 	public static void main(String args[]) {
 		//Read Input File
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader("symptoms.txt", StandardCharsets.UTF_8));
+		String fileName = "symptoms.txt";
+		try (FileReader fileReader = new FileReader(fileName, StandardCharsets.UTF_8);
+			 BufferedReader reader = new BufferedReader (fileReader);) {
+			/*Alternatives to FileReader
+			new BufferedReader (new InputStreamReader(new FileInputStream("symptoms.txt"), StandardCharsets.UTF_8));
+			Files.newBufferedReader(Paths.get("symptoms.txt"), StandardCharsets.UTF_8);*/
 			String line = reader.readLine();
 			int i = 0;
 			while (line != null) {
@@ -33,16 +36,6 @@ public class AnalyticsCounter {
 		} catch (java.io.IOException e){
 			e.printStackTrace();
 			//System.out.println(e); //more synthetic message
-		} finally {
-			if (reader != null){
-				try {
-					reader.close();
-				}
-				catch (IOException e)	{
-					e.printStackTrace();
-					//System.out.println(e); //more synthetic message
-				}
-			}
 		}
 		// Sort Map
 		sortSymptomsMap();
@@ -91,17 +84,15 @@ public class AnalyticsCounter {
 	 * Build symptoms file result.out
 	 */
 	private static void buildSymptomsFile() {
-		var lambdaContext = new Object() {
-			FileWriter writer = null;
-		};
-		try {
-			lambdaContext.writer = new FileWriter("result.out");
+		String fileName = "result.out";
+		try (FileWriter writer = new FileWriter(fileName);) {
+
 			//writer.write("number of symptoms: " + AnalyticsCounter.map.size() + "\n");
 			//writer.write("**************************\n");
 			AnalyticsCounter.sortedMap.forEach((k, v) ->
 					{
 						try {
-							lambdaContext.writer.write(k +": "+ v + "\n");
+							writer.write(k +": "+ v + "\n");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -109,14 +100,6 @@ public class AnalyticsCounter {
 			);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			if (lambdaContext.writer != null){
-				try {
-					lambdaContext.writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		} 
 	}
 }
