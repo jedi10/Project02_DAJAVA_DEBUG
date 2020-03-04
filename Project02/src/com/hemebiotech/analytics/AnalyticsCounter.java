@@ -21,7 +21,9 @@ public class AnalyticsCounter {
 		// Sort Map
 		sortSymptomsMap();
 		// Generate Output
-		buildSymptomsFile();
+		String outputFile = "result.out";
+		ISymptomWriter fileWriter = new WriteSymptomDataFile(outputFile);
+		fileWriter.buildSymptomsFile(AnalyticsCounter.sortedMap);
 	}
 
 	/**
@@ -61,28 +63,5 @@ public class AnalyticsCounter {
 		//toMap(Function keyMapper, Function valueMapper, BinaryOperator mergeFunction, Supplier mapSupplier)
 		//TreeMap Methods: descendingMap, headMap, tailMap, subMap
 		AnalyticsCounter.map.clear();
-	}
-
-	/**
-	 * Build symptoms file result.out
-	 */
-	private static void buildSymptomsFile() {
-		String fileName = "result.out";
-		try (FileWriter writer = new FileWriter(fileName);) {
-
-			//writer.write("number of symptoms: " + AnalyticsCounter.map.size() + "\n");
-			//writer.write("**************************\n");
-			AnalyticsCounter.sortedMap.forEach((k, v) ->
-					{
-						try {
-							writer.write(k +": "+ v + "\n");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-			);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
 	}
 }
