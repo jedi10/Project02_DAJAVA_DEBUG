@@ -43,7 +43,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 					line = reader.readLine();	// get another symptom
 				}
 				if (result.isEmpty()){
-					System.out.println("WARNING: Symptoms File doesn't have any symptoms inside");
+					System.out.println("WARNING: Reader Class: Symptoms File doesn't have any symptoms inside");
 				}
 			}
 			catch (FileNotFoundException e) {
@@ -55,7 +55,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				//System.out.println(e); //more synthetic message
 			}
 		} else {
-			System.out.println("WARNING: Symptoms File is null");
+			System.out.println("WARNING: Reader Class: Symptoms FileName is null");
 		}
 		return result;
 	}

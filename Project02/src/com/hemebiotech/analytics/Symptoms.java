@@ -30,6 +30,7 @@ public class Symptoms {
     /**
      * Build a sorted Map of symptom with number of occurrence and No duplication
      * Need a List with all Symptoms (raw list with duplication)
+     *
      * @param symptoms List < String >
      */
     private void buildSymptomsSortedMap(List<String> symptoms){

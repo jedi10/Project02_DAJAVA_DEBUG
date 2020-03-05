@@ -13,8 +13,9 @@ import java.util.List;
 public interface ISymptomReader {
 	/**
 	 * If no data is available, return an empty List
-	 * 
-	 * @return a raw listing of all Symptoms obtained from a data source, duplicates are possible/probable
+	 * if fileName is null, console shows a Warning message (App will not crash)
+	 *
+	 * @return List <String> raw listing of all Symptoms obtained from a data source, duplications possible and probable
 	 */
 	List<String> GetSymptoms ();
 }
