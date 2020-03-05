@@ -8,7 +8,7 @@ public class AnalyticsCounter {
 		//Read Input File
 		String fileName = "symptoms.txt";
 		ISymptomReader fileReader = new ReadSymptomDataFromFile(fileName);
-		List<String> list = fileReader.GetSymptoms();
+		List<Symptom> list = fileReader.GetSymptoms();
 		// build sort Map
 		Symptoms symptoms = new Symptoms(list);
 		// Generate Output

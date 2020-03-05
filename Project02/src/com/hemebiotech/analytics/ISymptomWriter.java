@@ -13,7 +13,7 @@ public interface ISymptomWriter {
      * if Map is empty, the file will be empty
      * if fileName or symptoms Map are null, console shows a Warning message(app will not crash)
      *
-     * @param symptomMap Map<String, Integer>
+     * @param symptomMap Map<String, Symptom>
      */
-    public void buildSymptomsFile(Map<String, Integer> symptomMap);
+    public void buildSymptomsFile(Map<String, Symptom> symptomMap);
 }
