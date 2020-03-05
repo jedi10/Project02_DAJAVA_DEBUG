@@ -17,7 +17,7 @@ public class WriteSymptomDataFile implements ISymptomWriter {
     }
 
     @Override
-    public void buildSymptomsFile(Map<String, Integer> symptomMap) {
+    public void buildSymptomsFile(Map<String, Symptom> symptomMap) {
         if (fileName != null) {
             if (symptomMap != null) {
                 try (FileWriter writer = new FileWriter(this.fileName);) {
@@ -26,7 +26,7 @@ public class WriteSymptomDataFile implements ISymptomWriter {
                     symptomMap.forEach((k, v) ->
                             {
                                 try {
-                                    writer.write(k + ": " + v + "\n");
+                                    writer.write(k + ": " + v.getOccurrence() + "\n");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
