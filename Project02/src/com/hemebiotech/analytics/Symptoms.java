@@ -10,9 +10,9 @@ public class Symptoms {
 
     /**
      * Sorted Map with no duplication
-     * Map.of("Symptom Libelle", Symptom Occurrence)
+     * Map.of("Symptom Libelle", Symptom Object)
      */
-    private Map<String, Integer> sortedMap;
+    private Map<String, Symptom> sortedMap;
 
     /**
     * Need a List with all Symptoms (raw list with duplications)
@@ -22,7 +22,7 @@ public class Symptoms {
         buildSymptomsSortedMap(symptoms);
     }
 
-    public Map<String, Integer> getMap() {
+    public Map<String, Symptom> getMap() {
         return sortedMap;
     }
 
@@ -39,8 +39,8 @@ public class Symptoms {
         sortedMap = symptoms.stream()
                 .collect(Collectors.toMap(
                         Symptom::getLibelle,
-                        Symptom::getOccurrence,
-                        Integer::sum,
+                        v -> v,
+                        (e1, e2) ->  new Symptom(e1.getLibelle(), e1.getOccurrence() + e2.getOccurrence()),
                         TreeMap::new)
                 );
         //toMap(Function keyMapper, Function valueMapper, BinaryOperator mergeFunction, Supplier mapSupplier)
