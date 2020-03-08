@@ -1,5 +1,8 @@
 package com.hemebiotech.analytics;
 
+/**
+ * Immutable Symptom Model
+ */
 public class Symptom {
     private String libelle;
 
@@ -24,11 +27,4 @@ public class Symptom {
         return occurrence;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
-    public void setOccurrence(Integer occurrence) {
-        this.occurrence = occurrence;
-    }
 }
