@@ -3,17 +3,20 @@ package com.hemebiotech.analytics;
 import java.util.Map;
 
 /**
- * Build symptoms file
+ * <b>Build a file with multiples lines composed with unique symptom associate with occurrence</b>
+ * <p>One line has two informations:</p>
+ * <ul>
+ *     <li>unique Symptom name</li>
+ *     <li>Occurrence of the Symptom</li>
+ * </ul>
+ * @author jedi10
  */
 public interface ISymptomWriter {
 
     /**
-     * Build a file with all symptoms occurrence
-     * need a sorted Map of unique symptoms
-     * if Map is empty, the file will be empty
-     * if fileName or symptoms Map are null, console shows a Warning message(app will not crash)
-     *
-     * @param symptomMap Map<String, Symptom>
+     * <b>Method build a file with unique symptom associate with occurrence</b>
+     * Need a sorted Map of unique symptoms
+     * @param symptomMap A Map With a String as a Key and Object Symptom as value
      */
     public void buildSymptomsFile(Map<String, Symptom> symptomMap);
 }

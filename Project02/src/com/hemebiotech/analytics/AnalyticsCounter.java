@@ -2,6 +2,9 @@ package com.hemebiotech.analytics;
 
 import java.util.*;
 
+/**
+ * <b>Main Class of the project</b>
+ */
 public class AnalyticsCounter {
 	
 	public static void main(String args[]) {
