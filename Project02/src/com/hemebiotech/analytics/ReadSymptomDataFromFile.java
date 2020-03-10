@@ -8,21 +8,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simple brute force implementation
- *
+ * <b>Simple brute force implementation of Interface ISymptomReader</b>
+ * @see ISymptomReader
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
+	/**
+	 * Input FileName used for file reading
+	 */
 	private String fileName;
 	
 	/**
-	 * 
-	 * @param fileName a full or partial path to file with symptom strings in it, one per line
+	 * <b>Constructor</b>
+	 * need a fileName
+	 * @param fileName a filename with symptom strings in it, one per line
+	 * @see ReadSymptomDataFromFile#fileName
 	 */
 	public ReadSymptomDataFromFile (String fileName) {
 		this.fileName = fileName;
 	}
 
+	/**
+	 * <b>Read symptom data from a source</b>
+	 * <ul>
+	 *     <li>If no data is available, return an empty List; </li>
+	 *     <li>If fileName is null, console shows a Warning message (App will not crash)</li>
+	 * </ul>
+	 * @return Raw listing of Symptoms Object obtained from a data source: duplications possible and probable
+	 */
 	@Override
 	public List<Symptom> GetSymptoms() {
 		ArrayList<Symptom> result = new ArrayList<>();

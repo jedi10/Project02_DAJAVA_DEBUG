@@ -4,18 +4,36 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * <b>Simple Implementation of Interface ISymptomWriter</b>
+ * @see ISymptomWriter
+ */
 public class WriteSymptomDataFile implements ISymptomWriter {
 
+    /**
+     * Filename used for file creation
+     */
     private String fileName;
 
     /**
-     * need a fileName for file creation
+     * <b>Constructor</b>
+     * need a fileName
      * @param fileName file name
+     * @see WriteSymptomDataFile#fileName
      */
     public WriteSymptomDataFile(String fileName) {
         this.fileName = fileName;
     }
 
+    /**
+     * <b>Method build a file with unique symptom associate with occurrence</b>
+     * <p>Need a sorted Map of unique symptoms</p>
+     * <ul>
+     *     <li>If Map is empty, the generated file will be empty;</li>
+     *     <li>If fileName or symptoms Map are null, console shows a Warning message(app will not crash)</li>
+     * </ul>
+     * @param symptomMap A Map With a String as a Key and Object Symptom as value
+     */
     @Override
     public void buildSymptomsFile(Map<String, Symptom> symptomMap) {
         if (fileName != null) {
