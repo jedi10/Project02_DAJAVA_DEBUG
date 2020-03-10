@@ -4,33 +4,42 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Map management
+ * <b>Map management</b>
+ * @author Jedy10
  */
 public class Symptoms {
 
     /**
-     * Sorted Map with no duplication
-     * Map.of("Symptom Libelle", Symptom Object)
+     * <b>Sorted Map with no duplication</b>
+     * <p>Map.of("Symptom Libelle", Symptom Object)</p>
+     * @see Symptoms#getMap()
      */
     private Map<String, Symptom> sortedMap;
 
     /**
-    * Need a List with all Symptoms (raw list with duplications)
-    * @param symptoms List < Symptom >
+    * <b>Constructor</b>
+    * <p>Need a List with all Symptoms (raw list with duplications)</p>
+    * @param symptoms List of Symptom Object
+    * @see Symptoms#sortedMap
     **/
     public Symptoms(List<Symptom> symptoms) {
         buildSymptomsSortedMap(symptoms);
     }
 
+    /**
+     * <b>Get a Sorted Map with no duplication</b>
+     * @return Sorted Map with a Symptom Name as Key, Symptom Object as Value
+     * @see Symptoms#sortedMap
+     */
     public Map<String, Symptom> getMap() {
         return sortedMap;
     }
 
     /**
-     * Build a sorted Map of symptom with number of occurrence and No duplication
-     * Need a List with all Symptoms (raw list with duplication)
+     * <b>Build a sorted Map of symptom with number of occurrence and No duplication</b>
+     * <p>Need a List with all Symptoms (raw list with duplication)</p>
      *
-     * @param symptoms List < Symptom >
+     * @param symptoms List of Symptom Object
      */
     private void buildSymptomsSortedMap(List<Symptom> symptoms){
         //https://www.concretepage.com/java/jdk-8/java-8-convert-list-to-map-using-collectors-tomap-example
