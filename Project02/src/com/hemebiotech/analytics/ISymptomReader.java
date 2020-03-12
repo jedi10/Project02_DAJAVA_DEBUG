@@ -4,8 +4,9 @@ import java.util.List;
 
 /**
  * <b>Anything that will read symptom data from a source</b>
+ * <p>The important part is:</p>
  * <ul>
- *     <li>The important part is, the return value from the operation, which is a list of symptom Object, that may contain many duplications</li>
+ *     <li>The return value from the operation, which is a list of symptom Object, that may contain many duplications</li>
  *     <li>The implementation does not need to order the list</li>
  * </ul>
  */
